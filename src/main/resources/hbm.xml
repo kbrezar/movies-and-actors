@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "https://hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="Movie" table="MOVIES">
+        <id name="id" type="int">
+            <column name="movie_id" />
+        </id>
+        
+        <property name="title" type="string" column="title"/>
+
+        <property name="description" type="string" column="description"/>
+
+        <property name="screenedYear" type="int" column="screenedYear"/>
+
+        <set name="starringActors" table="MOVIE_ACTOR" fetch="select" cascade="all">
+            <key column="movie_id" />
+            <many-to-many class="Actor" column="actor_id" />
+        </set>
+    </class>
+
+    <class name="Actor" table="ACTORS">
+        <id name="id" type="int">
+            <column name="actor_id"/>
+        </id>
+
+        <property name="firstName" type="string" column="firstName"/>
+
+        <property name="lastName" type="string" column="lastName"/>
+
+        <property name="bornDate" type="date" column="bornDate"/>
+
+        <set name="moviesStarred" table="MOVIE_ACTOR" fetch="select" cascade="all">
+            <key column="actor_id" />
+            <many-to-many class="Movie" column="movie_id"/>
+        </set>
+    </class>
+
+</hibernate-mapping>
